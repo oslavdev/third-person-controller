@@ -1,6 +1,6 @@
 **Third person controller**
 
-![Alt text](readme/1612085613317gif?raw=true  "Cover")
+![Alt text](readme/1612085613317.gif?raw=true  "Cover")
 
 Install
 
