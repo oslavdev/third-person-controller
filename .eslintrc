@@ -1,0 +1,13 @@
+{
+    "extends": ["@imaginary-cloud/react"],
+    "rules":{
+        "indent": [
+            "error",
+            2
+        ],
+        "no-console": [
+            0
+        ]
+    }
+   
+  }

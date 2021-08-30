@@ -1,0 +1,27 @@
+
+*,
+*::after,
+*::before{
+  margin:0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html{
+  font-size: 62.5%;
+  background: #919ea7;
+}
+
+body {
+  overflow-anchor: none;
+}
+
+a{
+  text-decoration: none;
+  transition: .3s;
+}
+
+canvas{
+  width: 100%;
+  height: 100vh;
+}

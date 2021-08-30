@@ -1,0 +1,12 @@
+#modules
+node_modules
+#certificate
+https
+# environments
+.env
+#production
+dist
+#cahce
+.cache
+#vscode
+.vscode

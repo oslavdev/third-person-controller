@@ -1,0 +1,51 @@
+
+Production
+// docker build -f Dockerfile.dev -t devimage .
+
+Development
+// docker build -t oslawdev/cv -f Dockerfile .
+
+language: generic
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t oslawdev/cv -f Dockerfile .
+
+script:
+  - docker run -e CI=true oslawdev/cv npm run test
+
+after_success:
+  - docker build -t oslawdev/cv .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push oslawdev/cv
+
+  language: node_js
+node_js:
+ - 11.6.0
+cache: npm
+  notifications:
+    email: false
+    slack: stampede-production:JBtLOLYw1Hoq2VIl1ZiQFxWC
+    on_success: always
+    on_failure: always 
+      template:
+        - "Repo `%{repository_slug}` *%{result}* build (<%{build_url}|#%{build_number}>) for commit (<%{compare_url}|%{commit}>) on branch `%{branch}`."
+        - "Execution time: *%{duration}*"
+        - "Message: %{message}"
+  
+jobs:
+  include:
+    - stage: compile
+      name: "Compile"
+      install: npm install
+    - stage: tests                
+      name: "Unit Tests"           
+      script: npm test
+      after_success: curl -X POST -H 'Content-type: application/json' --data '{"text":"Unit test finished!"}' https://hooks.slack.com/services/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
+    - stage: build
+      name: "Build"
+      script: npm run build
+      after_success: curl -X POST -H 'Content-type: application/json' --data '{"text":" `%{repository_slug}` *%{result}* Build finished  on branch `%{branch}`!"}' https://hooks.slack.com/services/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
